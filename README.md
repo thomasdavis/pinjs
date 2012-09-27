@@ -1,8 +1,10 @@
-# Pinjs - Node.js module for Pin.net.au
+# Pin.js - Node.js module for [Pin.net.au](http://pin.net.au)
 
 [![Build Status](https://secure.travis-ci.org/ApiEngine/pinjs.png?branch=master)](http://travis-ci.org/ApiEngine/pinjs)
 
-Pinjs is an node.js API client for [Pin](https://pin.net.au/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
+Pin.js is an node.js API client for [Pin](https://pin.net.au/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
+
+Down under we don't have access to some of the cooler payment gate ways so we are looking forward to Pin giving us more options than just Paypal.
 
 ## Getting started
 
