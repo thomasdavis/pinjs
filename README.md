@@ -67,7 +67,7 @@ pin.createCharge({
 
 ## Author
 
-Built by the team at [Api Engine](http://apiengine.io).
+Built by the team at [API Engine](http://apiengine.io).
 
 Contact: thomasalwyndavis@gmail.com
 
