@@ -4,7 +4,7 @@
 
 Pin.js is an node.js API client for [Pin](https://pin.net.au/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
 
-Down under we don't have access to some of the cooler payment gate ways so we are looking forward to Pin giving us more options than just Paypal.
+Down under we don't have access to some of the cooler payment gateways so we are looking forward to Pin giving us more options than just Paypal.
 
 ## Getting started
 
