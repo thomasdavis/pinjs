@@ -63,4 +63,10 @@ pin.createCharge({
 });
 ```
 
+## Author
+
+Built by the team at [Api Engine](http://apiengine.io).
+
+Contact: thomasalwyndavis@gmail.com
+
 <img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66606907ns.gif" />
