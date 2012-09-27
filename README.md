@@ -21,15 +21,15 @@ var pin = Pin.setup({
   key: 'yourkey',
   production: false
 });
-
-this.createCard = function (fields, callback) {
-this.createCustomer = function (fields, callback) {
-this.refundCharge = function (chargeId, fields, callback) {
-this.retrieveCharge = function (chargeId, callback) {
-this.createCharge = function (fields, callback) {
+// fields is an object, see the example for more info
+pin.createCard(fields, callback)
+pin.createCustomer(fields, callback)
+pin.refundCharge(chargeId, fields, callback)
+pin.retrieveCharge(chargeId, callback)
+pin.createCharge(fields, callback)
 ```
 
-## Sample
+## Example
 
 This is the basic syntax of how to create a new charge, checkout the demos folder for the rest of the methods
 
@@ -62,3 +62,5 @@ pin.createCharge({
   console.log(response.body);
 });
 ```
+
+<img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66606907ns.gif" />
