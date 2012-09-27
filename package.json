@@ -1,0 +1,22 @@
+{
+  "name": "pinjs",
+  "author": "Thomas Davis <thomasalwyndavis@gmail.com",
+  "description": "Api client for Pin.net.au - Australia's payment gateway",
+  "scripts": {
+    "test": "mocha -R list -t 5000"
+  },
+  "main": "./lib/pin",
+  "version": "1.0.0",
+  "dependencies": {
+    "superagent": "~0.9.4",
+    "mocha": "~1.5.0"
+  },
+  "keywords": [
+    "payment",
+    "transactions"
+  ],
+  "license": "bsd",
+  "engines": {
+    "node": ">=0.8"
+  }
+}
