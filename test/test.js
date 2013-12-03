@@ -1,5 +1,5 @@
 var Pin = require('../');
-var key = '';
+var key = 'ta9CWlfL1ovOXswoVLYP0g';
 var pin = Pin.setup({
   key: key,
   production: false
@@ -23,7 +23,6 @@ if(key.length > 0) {
         address_state: 'WA',
         address_country: 'AU'
       }, function (response) {  
-        console.log(response.body);
         if (!response.ok) { throw response };
         testCardToken = response.body.response.token;
         done();
