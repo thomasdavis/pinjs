@@ -14,7 +14,7 @@ if(key.length > 0) {
       pin.createCard({
         number: 5520000000000000,
         expiry_month: '05',
-        expiry_year: 2013,
+        expiry_year: 2015,
         cvc: 519,
         name: 'Roland Robot',
         address_line1: '42 Sevenoaks St',
@@ -23,6 +23,7 @@ if(key.length > 0) {
         address_state: 'WA',
         address_country: 'AU'
       }, function (response) {  
+        console.log(response.body);
         if (!response.ok) { throw response };
         testCardToken = response.body.response.token;
         done();
@@ -30,8 +31,6 @@ if(key.length > 0) {
 
     });
   });
-
-
 
   describe('Create a charge', function () {
     it('should return successfully', function (done) {
@@ -43,7 +42,7 @@ if(key.length > 0) {
         card: {
           number: 5520000000000000,
           expiry_month: '05',
-          expiry_year: 2013,
+          expiry_year: 2015,
           cvc: 123,
           name: 'Roland Robot',
           address_line1: '42 Sevenoaks St',
@@ -51,8 +50,8 @@ if(key.length > 0) {
           address_postcode: 6454,
           address_state: 'WA',
           address_country: 'AU'
-        }  
-      }, function (response) {  
+        }
+      }, function (response) {
         if (!response.ok) { throw response };
         testChargeToken = response.body.response.token;
         done();
@@ -68,7 +67,7 @@ if(key.length > 0) {
         card: {
           number: 5520000000000000,
           expiry_month: '05',
-          expiry_year: 2013,
+          expiry_year: 2015,
           cvc: 123,
           name: 'Roland Robot',
           address_line1: '42 Sevenoaks St',
@@ -76,8 +75,8 @@ if(key.length > 0) {
           address_postcode: 6454,
           address_state: 'WA',
           address_country: 'AU'
-        }  
-      }, function (response) {  
+        }
+      }, function (response) {
         if (!response.ok) { throw response };
         testCustomerToken = response.body.response.token;
         done();
@@ -89,7 +88,7 @@ if(key.length > 0) {
     it('should return successfully', function (done) {
       pin.refundCharge(testChargeToken, {
         amount: 400
-      }, function (response) {  
+      }, function (response) {
         if (!response.ok) { throw response };
         done();
       });
@@ -99,7 +98,7 @@ if(key.length > 0) {
 
   describe('Retrieve a charge', function () {
     it('should return successfully', function (done) {
-      pin.retrieveCharge(testChargeToken, function (response) {  
+      pin.retrieveCharge(testChargeToken, function (response) {
         if (!response.ok) { throw response };
         done();
       });
@@ -115,7 +114,7 @@ if(key.length > 0) {
         email: 'roland@pin.net.au',
         ip_address: '203.192.1.172',
         card_token: testCardToken
-      }, function (response) {  
+      }, function (response) {
         if (!response.ok) { throw response };
         done();
       });
@@ -131,7 +130,7 @@ if(key.length > 0) {
         email: 'roland@pin.net.au',
         ip_address: '203.192.1.172',
         customer_token: testCustomerToken
-      }, function (response) {  
+      }, function (response) {
         if (!response.ok) { throw response };
         done();
       });
@@ -144,7 +143,7 @@ if(key.length > 0) {
       pin.createCard({
         number: 5520000000000000,
         expiry_month: '05',
-        expiry_year: 2013,
+        expiry_year: 2015,
         cvc: 519,
         name: 'Roland Robot',
         address_line1: '42 Sevenoaks St',
@@ -152,12 +151,12 @@ if(key.length > 0) {
         address_postcode: 6454,
         address_state: 'WA',
         address_country: 'AU'
-      }, function (response) {  
+      }, function (response) {
         testCardToken = response.body.response.token;
         pin.createCustomer({
           email: 'roland@pin.net.au',
           card_token: testCardToken
-        }, function (response) {  
+        }, function (response) {
           if (!response.ok) { console.log(response);throw response };
           done();
         });
