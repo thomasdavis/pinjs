@@ -6,7 +6,7 @@
     "test": "mocha -R list -t 5000"
   },
   "main": "./lib/pin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "superagent": "~0.9.4"
   },
