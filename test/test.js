@@ -1,5 +1,5 @@
 var Pin = require('../');
-var key = 'ta9CWlfL1ovOXswoVLYP0g';
+var key = '';
 var pin = Pin.setup({
   key: key,
   production: false
@@ -82,6 +82,16 @@ if(key.length > 0) {
       })
     });
   });
+
+  describe('Retrieve a customer', function () {
+    it('should return successfully', function (done) {
+      pin.retrieveCustomer(testCustomerToken, function (response) {
+        if (!response.ok) { throw response };
+        done();
+      });
+    });
+  });
+
 
   describe('Refund a charge', function () {
     it('should return successfully', function (done) {
