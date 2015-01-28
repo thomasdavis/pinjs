@@ -10,156 +10,156 @@ var testChargeToken, testCustomerToken, testCardToken, testRecipient;
 
 if(key.length > 0) {
 
-  // describe('Create a card', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.createCard({
-  //       number: 5520000000000000,
-  //       expiry_month: '05',
-  //       expiry_year: 2015,
-  //       cvc: 519,
-  //       name: 'Roland Robot',
-  //       address_line1: '42 Sevenoaks St',
-  //       address_city: 'Lathlain',
-  //       address_postcode: 6454,
-  //       address_state: 'WA',
-  //       address_country: 'AU'
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       testCardToken = res.token;
-  //       done();
-  //     });
+  describe('Create a card', function () {
+    it('should return successfully', function (done) {
+      pin.createCard({
+        number: 5520000000000000,
+        expiry_month: '05',
+        expiry_year: 2015,
+        cvc: 519,
+        name: 'Roland Robot',
+        address_line1: '42 Sevenoaks St',
+        address_city: 'Lathlain',
+        address_postcode: 6454,
+        address_state: 'WA',
+        address_country: 'AU'
+      }, function (err,res) {
+        if (err) { throw err };
+        testCardToken = res.token;
+        done();
+      });
+
+    });
+  });
   //
-  //   });
-  // });
-  // //
-  // describe('Create a charge', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.createCharge({
-  //       amount: 400,
-  //       description: 'test charge',
-  //       email: 'roland@pin.net.au',
-  //       ip_address: '203.192.1.172',
-  //       card: {
-  //         number: 5520000000000000,
-  //         expiry_month: '05',
-  //         expiry_year: 2015,
-  //         cvc: 123,
-  //         name: 'Roland Robot',
-  //         address_line1: '42 Sevenoaks St',
-  //         address_city: 'Lathlain',
-  //         address_postcode: 6454,
-  //         address_state: 'WA',
-  //         address_country: 'AU'
-  //       }
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       testChargeToken = res.token;
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Create a customer', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.createCustomer({
-  //       email: 'roland@pin.net.au',
-  //       card: {
-  //         number: 5520000000000000,
-  //         expiry_month: '05',
-  //         expiry_year: 2015,
-  //         cvc: 123,
-  //         name: 'Roland Robot',
-  //         address_line1: '42 Sevenoaks St',
-  //         address_city: 'Lathlain',
-  //         address_postcode: 6454,
-  //         address_state: 'WA',
-  //         address_country: 'AU'
-  //       }
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       testCustomerToken = res.token;
-  //       done();
-  //     })
-  //   });
-  // });
-  // //
-  // describe('Retrieve a customer', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.retrieveCustomer(testCustomerToken, function (err,res) {
-  //       if (err) { throw err };
-  //       console.log("res",res);
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Refund a charge', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.refundCharge(testChargeToken, {
-  //       amount: 400
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Retrieve a charge', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.retrieveCharge(testChargeToken, function (err,res) {
-  //       if (err) { throw err };
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Create a charge using a card token', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.createCharge({
-  //       amount: 400,
-  //       description: 'test charge',
-  //       email: 'roland@pin.net.au',
-  //       ip_address: '203.192.1.172',
-  //       card_token: testCardToken
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Create a charge using a customer token', function () {
-  //   it('should return successfully', function (done) {
-  //     pin.createCharge({
-  //       amount: 400,
-  //       description: 'test charge',
-  //       email: 'roland@pin.net.au',
-  //       ip_address: '203.192.1.172',
-  //       customer_token: testCustomerToken
-  //     }, function (err,res) {
-  //       if (err) { throw err };
-  //       done();
-  //     });
-  //   });
-  // });
-  // //
-  // //
-  // describe('Create a customer using a card token', function () {
-  //   it('should return successfully', function (done) {
-  //       pin.createCustomer({
-  //         email: 'roland@pin.net.au',
-  //         card_token: testCardToken
-  //       }, function (err,res) {
-  //         if (err) {throw err };
-  //         done();
-  //       });
-  //     });
-  // });
+  describe('Create a charge', function () {
+    it('should return successfully', function (done) {
+      pin.createCharge({
+        amount: 400,
+        description: 'test charge',
+        email: 'roland@pin.net.au',
+        ip_address: '203.192.1.172',
+        card: {
+          number: 5520000000000000,
+          expiry_month: '05',
+          expiry_year: 2015,
+          cvc: 123,
+          name: 'Roland Robot',
+          address_line1: '42 Sevenoaks St',
+          address_city: 'Lathlain',
+          address_postcode: 6454,
+          address_state: 'WA',
+          address_country: 'AU'
+        }
+      }, function (err,res) {
+        if (err) { throw err };
+        testChargeToken = res.token;
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Create a customer', function () {
+    it('should return successfully', function (done) {
+      pin.createCustomer({
+        email: 'roland@pin.net.au',
+        card: {
+          number: 5520000000000000,
+          expiry_month: '05',
+          expiry_year: 2015,
+          cvc: 123,
+          name: 'Roland Robot',
+          address_line1: '42 Sevenoaks St',
+          address_city: 'Lathlain',
+          address_postcode: 6454,
+          address_state: 'WA',
+          address_country: 'AU'
+        }
+      }, function (err,res) {
+        if (err) { throw err };
+        testCustomerToken = res.token;
+        done();
+      })
+    });
+  });
+  //
+  describe('Retrieve a customer', function () {
+    it('should return successfully', function (done) {
+      pin.retrieveCustomer(testCustomerToken, function (err,res) {
+        if (err) { throw err };
+        console.log("res",res);
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Refund a charge', function () {
+    it('should return successfully', function (done) {
+      pin.refundCharge(testChargeToken, {
+        amount: 400
+      }, function (err,res) {
+        if (err) { throw err };
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Retrieve a charge', function () {
+    it('should return successfully', function (done) {
+      pin.retrieveCharge(testChargeToken, function (err,res) {
+        if (err) { throw err };
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Create a charge using a card token', function () {
+    it('should return successfully', function (done) {
+      pin.createCharge({
+        amount: 400,
+        description: 'test charge',
+        email: 'roland@pin.net.au',
+        ip_address: '203.192.1.172',
+        card_token: testCardToken
+      }, function (err,res) {
+        if (err) { throw err };
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Create a charge using a customer token', function () {
+    it('should return successfully', function (done) {
+      pin.createCharge({
+        amount: 400,
+        description: 'test charge',
+        email: 'roland@pin.net.au',
+        ip_address: '203.192.1.172',
+        customer_token: testCustomerToken
+      }, function (err,res) {
+        if (err) { throw err };
+        done();
+      });
+    });
+  });
+  //
+  //
+  describe('Create a customer using a card token', function () {
+    it('should return successfully', function (done) {
+        pin.createCustomer({
+          email: 'roland@pin.net.au',
+          card_token: testCardToken
+        }, function (err,res) {
+          if (err) {throw err };
+          done();
+        });
+      });
+  });
 
   describe('Create recipient', function(){
     it('should return successfully', function(done){
@@ -227,7 +227,6 @@ if(key.length > 0) {
     it('should update recipient bank account', function(done){
       var bankUpdate = {"name": "Mr SLim Pterodactyl","bsb": "4324","number": "9876234241"}
       pin.updateRecipientData(testRecipient.token,{bank_account : {"name": "Mr SLim Pterodactyl","bsb": "4324","number": "9876234241"}},function(err,res){
-        console.log("res",res);
         if(err                               ) {throw err                                      };
         // if(res.name    !== bankUpdate.name   ) {throw new Error('bank name update failed'      )};
         // if(res.bsb     !== bankUpdate.bsb    ) {throw new Error('bsb update faield'            )};
