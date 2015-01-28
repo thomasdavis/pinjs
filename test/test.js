@@ -1,7 +1,7 @@
 var Pin = require('../');
-var key = '';
+var key = 'lLlpdn5KOO-vusSMnBYq_A';
 var pin = Pin.setup({
-  key: key,
+  key: 'pk_DSA-1XmSdIIViXp4bJO8SA',
   production: false
 });
 
@@ -22,7 +22,7 @@ if(key.length > 0) {
         address_postcode: 6454,
         address_state: 'WA',
         address_country: 'AU'
-      }, function (response) {  
+      }, function (response) {
         if (!response.ok) { throw response };
         testCardToken = response.body.response.token;
         done();
@@ -166,13 +166,31 @@ if(key.length > 0) {
           email: 'roland@pin.net.au',
           card_token: testCardToken
         }, function (response) {
-          if (!response.ok) { console.log(response);throw response };
+          if (!response.ok) {throw response };
           done();
         });
       });
 
     });
   });
+
+  describe('Create recipient', function(){
+    it('should return successfully', function(done){
+      pin.createRecipient({
+        email : 'dino@thefat.com',
+        name  : 'Fat Dinosaur',
+        bank_account : {
+          "name": "Mr Fat Dinosaur",
+          "bsb": "123456",
+          "number": "987654321"
+        }
+      },function(response){
+        if(!response.ok) {throw response};
+        done();
+      });
+    });
+  });
+
 } else{
   describe('You will need a valid api key to run tests', function () {
     it('should return successfully', function () {
