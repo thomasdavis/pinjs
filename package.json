@@ -11,7 +11,8 @@
     "superagent": "~0.9.4"
   },
   "devDependencies": {
-    "mocha": "~1.5.0"
+    "mocha": "~1.5.0",
+    "underscore" : "~1.7.0"
   },
   "keywords": [
     "payment",
