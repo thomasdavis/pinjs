@@ -240,7 +240,6 @@ if(key.length > 0) {
     it('should update recipient bank account', function(done){
       var bankUpdate = {"name": "Mr SLim Pterodactyl","bsb": "432412","number": "9876234241"}
       pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res){
-          console.log("bank account", res);
         if(err                                            ) {throw err                                      };
         if(res.bank_account.name    !== bankUpdate.name   ) {throw new Error('bank name update failed'      )};
         if(res.bank_account.bsb     !== bankUpdate.bsb    ) {throw new Error('bsb update faield'            )};
