@@ -1,7 +1,11 @@
-var Pin = require('../');
-var _ = require('underscore');
-var key = 'lLlpdn5KOO-vusSMnBYq_A';
-var pin = Pin.setup({
+var Pin     = require('../');
+var _       = require('underscore');
+var chai    = require('chai');
+var expect  = chai.expect;
+chai.use(require('chai-things'));
+
+var key     = 'lLlpdn5KOO-vusSMnBYq_A';
+var pin     = Pin.setup({
   key: key,
   production: false
 });
@@ -31,7 +35,7 @@ if(key.length > 0) {
 
     });
   });
-  //
+
   describe('Create a charge', function () {
     it('should return successfully', function (done) {
       pin.createCharge({
@@ -59,7 +63,7 @@ if(key.length > 0) {
     });
   });
   //
-  //
+
   describe('Create a customer', function () {
     it('should return successfully', function (done) {
       pin.createCustomer({
@@ -188,12 +192,13 @@ if(key.length > 0) {
       }
       pin.createRecipient(testRecipient,function(err,res){
         if(err) {throw err};
+        console.log("test recipient", res);
         testRecipient = res;
         done();
       });
     });
   });
-  //
+
   describe('Get recipient data', function(){
     it('should return successfully',function(done){
       pin.getRecipientData(testRecipient.token, function(err,res){
@@ -226,27 +231,72 @@ if(key.length > 0) {
     it('should update email', function(done){
       pin.updateRecipientData(testRecipient.token,{email : 'test@test.com'},function(err,res){
         if(err) {throw err};
-        if(res.email !== 'test@test.com') {throw new Error('email update failed')};
+        expect(res.email).to.equal('test@test.com');
         done()
       });
     });
     it('should update recipient name', function(done){
       pin.updateRecipientData(testRecipient.token,{name : 'slim pterodactyl'},function(err,res){
         if(err) {throw err};
-        if(res.name !== 'slim pterodactyl') {throw new Error('name update failed')};
+        expect(res.name).to.equal('slim pterodactyl');
         done();
       });
     });
     it('should update recipient bank account', function(done){
       var bankUpdate = {"name": "Mr SLim Pterodactyl","bsb": "432412","number": "9876234241"}
       pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res){
-        if(err                                            ) {throw err                                      };
-        if(res.bank_account.name    !== bankUpdate.name   ) {throw new Error('bank name update failed'      )};
-        if(res.bank_account.bsb     !== bankUpdate.bsb    ) {throw new Error('bsb update faield'            )};
+        if(err) {throw err };
+        expect(res.bank_account.name).to.equal(bankUpdate.name);
+        expect(res.bank_account.bsb).to.equal(bankUpdate.bsb);
         done();
       });
     });
   });
+
+  describe('Create transfer', function(){
+    it('should return successfully', function(done){
+      pin.createTransfer({
+        description : "test transfer",
+        amount : 10,
+        currency : "AUD",
+        recipient : testRecipient.token
+      },function(err,res){
+        if(err) {throw err};
+        testTransfer = res;
+        done();
+      });
+    });
+  });
+
+  describe('Get all transfers', function(){
+    it('should return array of transfers', function(done){
+      pin.getTransfersList(function(err,res){
+        if(err) {throw err};
+        done();
+      });
+    });
+  });
+
+  describe('Get transfer details', function(){
+    it('should return successfully', function(done){
+      pin.getTransferDetails(testTransfer.token,function(err,res){
+        if(err) {throw err};
+        done();
+      });
+    });
+  });
+
+  describe('Get transfer line items', function(){
+    it('should return successfully', function(done){
+      pin.getTransferLineItems(testTransfer.token, function(err,res){
+        if(err) {throw err};
+        done();
+      });
+    });
+  });
+
+
+
 
 } else{
   describe('You will need a valid api key to run tests', function () {
