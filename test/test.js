@@ -2,6 +2,7 @@ var Pin     = require('../');
 var _       = require('underscore');
 var chai    = require('chai');
 var expect  = chai.expect;
+var moment = require('moment');
 chai.use(require('chai-things'));
 
 var key     = 'lLlpdn5KOO-vusSMnBYq_A';
@@ -10,7 +11,10 @@ var pin     = Pin.setup({
   production: false
 });
 
+var nextYear = moment().add(1, "year").format("YYYY");
+
 var testChargeToken, testCustomerToken, testCardToken, testRecipient;
+var nonCapturedCharge;
 
 if(key.length > 0) {
 
@@ -19,7 +23,7 @@ if(key.length > 0) {
       pin.createCard({
         number: 5520000000000000,
         expiry_month: '05',
-        expiry_year: 2015,
+        expiry_year: nextYear,
         cvc: 519,
         name: 'Roland Robot',
         address_line1: '42 Sevenoaks St',
@@ -28,7 +32,10 @@ if(key.length > 0) {
         address_state: 'WA',
         address_country: 'AU'
       }, function (err,res) {
-        if (err) { throw err };
+        if (err) {
+          console.error(err, res);
+          throw err
+        };
         testCardToken = res.token;
         done();
       });
@@ -46,7 +53,7 @@ if(key.length > 0) {
         card: {
           number: 5520000000000000,
           expiry_month: '05',
-          expiry_year: 2015,
+          expiry_year: nextYear,
           cvc: 123,
           name: 'Roland Robot',
           address_line1: '42 Sevenoaks St',
@@ -56,8 +63,45 @@ if(key.length > 0) {
           address_country: 'AU'
         }
       }, function (err,res) {
-        if (err) { throw err };
+        if (err) {
+          console.error(err, res);
+          throw err
+        };
         testChargeToken = res.token;
+        done();
+      });
+    });
+  });
+
+  describe('Create a charge and not capture', function () {
+    it('should return successfully', function (done) {
+      pin.createCharge({
+        amount: 400,
+        currency: "AUD",
+        description: 'test charge',
+        email: 'roland@pin.net.au',
+        ip_address: '203.192.1.172',
+        capture: false,
+        card: {
+          number: 5520000000000000,
+          expiry_month: '05',
+          expiry_year: nextYear,
+          cvc: 123,
+          name: 'Roland Robot',
+          address_line1: '42 Sevenoaks St',
+          address_line2: "",
+          address_city: 'Lathlain',
+          address_postcode: 6454,
+          address_state: 'WA',
+          address_country: 'Australia'
+        }
+      }, function (err,res) {
+        if (err) {
+          console.error(err, res);
+          throw err
+        };
+        console.log(res);
+        nonCapturedCharge = res.token;
         done();
       });
     });
@@ -71,7 +115,7 @@ if(key.length > 0) {
         card: {
           number: 5520000000000000,
           expiry_month: '05',
-          expiry_year: 2015,
+          expiry_year: nextYear,
           cvc: 123,
           name: 'Roland Robot',
           address_line1: '42 Sevenoaks St',
@@ -81,7 +125,9 @@ if(key.length > 0) {
           address_country: 'AU'
         }
       }, function (err,res) {
-        if (err) { throw err };
+        if (err) {
+          throw err
+        };
         testCustomerToken = res.token;
         done();
       })
@@ -157,7 +203,7 @@ if(key.length > 0) {
       pin.createCard({
         number: 5520000000000000,
         expiry_month: '05',
-        expiry_year: 2015,
+        expiry_year: nextYear,
         cvc: 519,
         name: 'Roland Robot',
         address_line1: '42 Sevenoaks St',
@@ -243,7 +289,7 @@ if(key.length > 0) {
       });
     });
     it('should update recipient bank account', function(done){
-      var bankUpdate = {"name": "Mr SLim Pterodactyl","bsb": "432412","number": "9876234241"}
+      var bankUpdate = {"name": "Mr Roland Robot","bsb": "123456","number": "987654321"};
       pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res){
         if(err) {throw err };
         expect(res.bank_account.name).to.equal(bankUpdate.name);
@@ -294,6 +340,15 @@ if(key.length > 0) {
       });
     });
   });
+
+  describe('Capture a charge', function () {
+    it('should capture a non captured charge', function (done) {
+      pin.captureCharge(nonCapturedCharge, function (err, res) {
+        if(err) {throw err};
+        done();
+      })
+    })
+  })
 
 
 
