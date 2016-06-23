@@ -29,6 +29,7 @@ pin.createCustomer(fields, callback)
 pin.refundCharge(chargeId, fields, callback)
 pin.retrieveCharge(chargeId, callback)
 pin.createCharge(fields, callback)
+pin.captureCharge(uncapturedChargeToken, callback)
 ```
 
 ## Example
