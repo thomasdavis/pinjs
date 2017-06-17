@@ -13,7 +13,7 @@ var pin     = Pin.setup({
 
 var nextYear = moment().add(1, "year").format("YYYY");
 
-var testChargeToken, testCustomerToken, testCardToken, testRecipient;
+var testChargeToken, testCustomerToken, testCardToken, testRecipient, testTransfer;
 var nonCapturedCharge;
 
 if(key.length > 0) {
@@ -31,12 +31,12 @@ if(key.length > 0) {
         address_postcode: 6454,
         address_state: 'WA',
         address_country: 'AU'
-      }, function (err,res) {
+      }, function (err,res,body) {
         if (err) {
-          console.error(err, res);
+          console.error(err, res, body);
           throw err
         };
-        testCardToken = res.token;
+        testCardToken = body.token;
         done();
       });
 
@@ -62,12 +62,12 @@ if(key.length > 0) {
           address_state: 'WA',
           address_country: 'AU'
         }
-      }, function (err,res) {
+      }, function (err,res,body) {
         if (err) {
-          console.error(err, res);
+          console.error(err, res, body);
           throw err
         };
-        testChargeToken = res.token;
+        testChargeToken = body.token;
         done();
       });
     });
@@ -95,18 +95,16 @@ if(key.length > 0) {
           address_state: 'WA',
           address_country: 'Australia'
         }
-      }, function (err,res) {
+      }, function (err,res,body) {
         if (err) {
-          console.error(err, res);
+          console.error(err, res, body);
           throw err
         };
-        console.log(res);
-        nonCapturedCharge = res.token;
+        nonCapturedCharge = body.token;
         done();
       });
     });
   });
-  //
 
   describe('Create a customer', function () {
     it('should return successfully', function (done) {
@@ -124,38 +122,37 @@ if(key.length > 0) {
           address_state: 'WA',
           address_country: 'AU'
         }
-      }, function (err,res) {
+      }, function (err,res,body) {
         if (err) {
+          console.error(err, res, body);
           throw err
         };
-        testCustomerToken = res.token;
+        testCustomerToken = body.token;
         done();
       })
     });
   });
-  //
+
   describe('Retrieve a customer', function () {
     it('should return successfully', function (done) {
-      pin.retrieveCustomer(testCustomerToken, function (err,res) {
+      pin.retrieveCustomer(testCustomerToken, function (err,res,body) {
         if (err) { throw err };
         done();
       });
     });
   });
-  //
-  //
+
   describe('Refund a charge', function () {
     it('should return successfully', function (done) {
       pin.refundCharge(testChargeToken, {
         amount: 400
-      }, function (err,res) {
+      }, function (err,res,body) {
         if (err) { throw err };
         done();
       });
     });
   });
-  //
-  //
+
   describe('Retrieve a charge', function () {
     it('should return successfully', function (done) {
       pin.retrieveCharge(testChargeToken, function (err,res) {
@@ -164,8 +161,7 @@ if(key.length > 0) {
       });
     });
   });
-  //
-  //
+
   describe('Create a charge using a card token', function () {
     it('should return successfully', function (done) {
       pin.createCharge({
@@ -180,8 +176,7 @@ if(key.length > 0) {
       });
     });
   });
-  //
-  //
+  
   describe('Create a charge using a customer token', function () {
     it('should return successfully', function (done) {
       pin.createCharge({
@@ -196,8 +191,7 @@ if(key.length > 0) {
       });
     });
   });
-  //
-  //
+
   describe('Create a customer using a card token', function () {
     it('should return successfully', function (done) {
       pin.createCard({
@@ -211,8 +205,8 @@ if(key.length > 0) {
         address_postcode: 6454,
         address_state: 'WA',
         address_country: 'AU'
-      }, function (err,res) {
-        testCardToken = res.token;
+      }, function (err,res,body) {
+        testCardToken = body.token;
         pin.createCustomer({
           email: 'roland@pin.net.au',
           card_token: testCardToken
@@ -236,10 +230,9 @@ if(key.length > 0) {
           "number": "987654321"
         }
       }
-      pin.createRecipient(testRecipient,function(err,res){
+      pin.createRecipient(testRecipient,function(err,res,body){
         if(err) {throw err};
-        console.log("test recipient", res);
-        testRecipient = res;
+        testRecipient = body.response;
         done();
       });
     });
@@ -247,9 +240,9 @@ if(key.length > 0) {
 
   describe('Get recipient data', function(){
     it('should return successfully',function(done){
-      pin.getRecipientData(testRecipient.token, function(err,res){
+      pin.getRecipientData(testRecipient.token, function(err,res,body){
         if(err) {throw err};
-        if(JSON.stringify(res) !== JSON.stringify(testRecipient)) {throw new Error('get recipient data failed')}
+        if(JSON.stringify(body.response) !== JSON.stringify(testRecipient)) {throw new Error('get recipient data failed')}
         done();
       });
     })
@@ -275,25 +268,25 @@ if(key.length > 0) {
 
   describe('Update recipient data', function(){
     it('should update email', function(done){
-      pin.updateRecipientData(testRecipient.token,{email : 'test@test.com'},function(err,res){
+      pin.updateRecipientData(testRecipient.token,{email : 'test@test.com'},function(err,res,body){
         if(err) {throw err};
-        expect(res.email).to.equal('test@test.com');
+        expect(body.response.email).to.equal('test@test.com');
         done()
       });
     });
     it('should update recipient name', function(done){
-      pin.updateRecipientData(testRecipient.token,{name : 'slim pterodactyl'},function(err,res){
+      pin.updateRecipientData(testRecipient.token,{name : 'slim pterodactyl'},function(err,res,body){
         if(err) {throw err};
-        expect(res.name).to.equal('slim pterodactyl');
+        expect(body.response.name).to.equal('slim pterodactyl');
         done();
       });
     });
     it('should update recipient bank account', function(done){
       var bankUpdate = {"name": "Mr Roland Robot","bsb": "123456","number": "987654321"};
-      pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res){
+      pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res,body){
         if(err) {throw err };
-        expect(res.bank_account.name).to.equal(bankUpdate.name);
-        expect(res.bank_account.bsb).to.equal(bankUpdate.bsb);
+        expect(body.response.bank_account.name).to.equal(bankUpdate.name);
+        expect(body.response.bank_account.bsb).to.equal(bankUpdate.bsb);
         done();
       });
     });
@@ -306,9 +299,9 @@ if(key.length > 0) {
         amount : 10,
         currency : "AUD",
         recipient : testRecipient.token
-      },function(err,res){
+      },function(err,res,body){
         if(err) {throw err};
-        testTransfer = res;
+        testTransfer = body;
         done();
       });
     });
@@ -349,9 +342,6 @@ if(key.length > 0) {
       })
     })
   })
-
-
-
 
 } else{
   describe('You will need a valid api key to run tests', function () {

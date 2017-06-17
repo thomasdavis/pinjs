@@ -1,14 +1,17 @@
 {
   "name": "pinjs",
   "author": "Thomas Davis <thomasalwyndavis@gmail.com",
+  "contributors": [
+    "Martin Wheeler <hello@martinwheeler.com.au> (https://martinwheeler.com.au/)"
+  ],
   "description": "Api client for Pin.net.au - Australia's payment gateway",
   "scripts": {
     "test": "mocha -R list -t 5000"
   },
   "main": "./lib/pin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
-    "superagent": "~0.9.4"
+    "request": "~2.81.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
