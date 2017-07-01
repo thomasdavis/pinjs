@@ -36,6 +36,8 @@ pin.captureCharge(uncapturedChargeToken, callback)
 
 This is the basic syntax of how to create a new charge, checkout the demos folder for the rest of the methods
 
+> Note: As of v1.0.2 the callback parameters have been updated. Please check the example bellow.
+
 ```javascript
 var Pin = require('pinjs');
 
@@ -60,9 +62,15 @@ pin.createCharge({
     address_postcode: 6454,
     address_state: 'WA',
     address_country: 'AU'
-  }  
-}, function (response) {  
-  console.log(response.body);
+  }
+}, 
+/**
+ * @param error - Error response from the API
+ * @param response - A HTTP response object.
+ * @param body - The JSON response body.
+ */
+function (error, response, body) {
+  console.log(body);
 });
 ```
 
