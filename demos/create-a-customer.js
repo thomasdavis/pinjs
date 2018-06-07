@@ -6,7 +6,7 @@ var pin = Pin.setup({
 });
 
 pin.createCustomer({
-  email: 'roland@pin.net.au',
+  email: 'roland@pinpayments.com',
   card: {
     number: 5520000000000000,
     expiry_month: '05',

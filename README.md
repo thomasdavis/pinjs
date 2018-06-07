@@ -1,8 +1,8 @@
-# Pin.js - Node.js module for [Pin.net.au](http://pin.net.au)
+# Pin.js - Node.js module for [pinpayments.com](http://pinpayments.com)
 
 [![Build Status](https://secure.travis-ci.org/ApiEngine/pinjs.png?branch=master)](http://travis-ci.org/ApiEngine/pinjs)
 
-Pin.js is an node.js API client for [Pin](https://pin.net.au/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
+Pin.js is an node.js API client for [Pin](https://pinpayments.com/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
 
 Down under we don't have access to some of the cooler payment gateways so we are looking forward to Pin giving us more options than just Paypal.
 
@@ -47,7 +47,7 @@ var pin = Pin.setup({
 pin.createCharge({
   amount: 400,
   description: 'test charge',
-  email: 'roland@pin.net.au',
+  email: 'roland@pinpayments.com',
   ip_address: '203.192.1.172',
   card: {
     number: 5520000000000000,

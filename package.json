@@ -4,7 +4,7 @@
   "contributors": [
     "Martin Wheeler <hello@martinwheeler.com.au> (https://martinwheeler.com.au/)"
   ],
-  "description": "Api client for Pin.net.au - Australia's payment gateway",
+  "description": "Api client for pinpayments.com - Australia's payment gateway",
   "scripts": {
     "test": "mocha -R list -t 5000"
   },
