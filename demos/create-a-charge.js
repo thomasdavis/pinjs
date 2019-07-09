@@ -8,7 +8,7 @@ var pin = Pin.setup({
 pin.createCharge({
   amount: 400,
   description: 'test charge',
-  email: 'roland@pin.net.au',
+  email: 'roland@pinpayments.com',
   ip_address: '203.192.1.172',
   card: {
     number: 5520000000000000,

@@ -48,7 +48,7 @@ if(key.length > 0) {
       pin.createCharge({
         amount: 400,
         description: 'test charge',
-        email: 'roland@pin.net.au',
+        email: 'roland@pinpayments.com',
         ip_address: '203.192.1.172',
         card: {
           number: 5520000000000000,
@@ -79,7 +79,7 @@ if(key.length > 0) {
         amount: 400,
         currency: "AUD",
         description: 'test charge',
-        email: 'roland@pin.net.au',
+        email: 'roland@pinpayments.com',
         ip_address: '203.192.1.172',
         capture: false,
         card: {
@@ -109,7 +109,7 @@ if(key.length > 0) {
   describe('Create a customer', function () {
     it('should return successfully', function (done) {
       pin.createCustomer({
-        email: 'roland@pin.net.au',
+        email: 'roland@pinpayments.com',
         card: {
           number: 5520000000000000,
           expiry_month: '05',
@@ -167,7 +167,7 @@ if(key.length > 0) {
       pin.createCharge({
         amount: 400,
         description: 'test charge',
-        email: 'roland@pin.net.au',
+        email: 'roland@pinpayments.com',
         ip_address: '203.192.1.172',
         card_token: testCardToken
       }, function (err,res) {
@@ -182,7 +182,7 @@ if(key.length > 0) {
       pin.createCharge({
         amount: 400,
         description: 'test charge',
-        email: 'roland@pin.net.au',
+        email: 'roland@pinpayments.com',
         ip_address: '203.192.1.172',
         customer_token: testCustomerToken
       }, function (err,res) {
@@ -208,7 +208,7 @@ if(key.length > 0) {
       }, function (err,res,body) {
         testCardToken = body.token;
         pin.createCustomer({
-          email: 'roland@pin.net.au',
+          email: 'roland@pinpayments.com',
           card_token: testCardToken
         }, function (err,res) {
           if (err) { throw err };
