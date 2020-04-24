@@ -127,7 +127,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testCustomerToken = body.token;
+        testCustomerToken = body.response.token;
         done();
       })
     });
@@ -137,6 +137,29 @@ if(key.length > 0) {
     it('should return successfully', function (done) {
       pin.retrieveCustomer(testCustomerToken, function (err,res,body) {
         if (err) { throw err };
+        done();
+      });
+    });
+  });
+
+  describe('Add a customer card', function () {
+    it('should return successfully', function (done) {
+      var otherCard = {
+        number: 372000000000000,
+        expiry_month: '11',
+        expiry_year: nextYear,
+        cvc: 1234,
+        name: 'Roland Robot',
+        address_line1: '42 Sevenoaks St',
+        address_city: 'Lathlain',
+        address_postcode: 6454,
+        address_state: 'WA',
+        address_country: 'AU'
+      };
+      pin.createCustomerCard(testCustomerToken, otherCard, function (err,res,body) {
+        if (err) { throw err };
+        expect(res.statusCode).to.equal(201); // Created
+        expect(body.response.customer_token).to.equal(testCustomerToken);
         done();
       });
     });
@@ -226,7 +249,7 @@ if(key.length > 0) {
         name  : 'Fat Dinosaur',
         bank_account : {
           "name": "Mr Fat Dinosaur",
-          "bsb": "123456",
+          "bsb": "342088",
           "number": "987654321"
         }
       }
@@ -282,7 +305,7 @@ if(key.length > 0) {
       });
     });
     it('should update recipient bank account', function(done){
-      var bankUpdate = {"name": "Mr Roland Robot","bsb": "123456","number": "987654321"};
+      var bankUpdate = {"name": "Mr Roland Robot","bsb": "342088","number": "987654321"};
       pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res,body){
         if(err) {throw err };
         expect(body.response.bank_account.name).to.equal(bankUpdate.name);
