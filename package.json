@@ -9,7 +9,7 @@
     "test": "mocha -R list -t 5000"
   },
   "main": "./lib/pin",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "dependencies": {
     "got": "^10.7.0"
   },
@@ -26,6 +26,6 @@
   ],
   "license": "bsd",
   "engines": {
-    "node": ">=0.8"
+    "node": ">=10.13.0"
   }
 }
