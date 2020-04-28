@@ -36,7 +36,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testCardToken = body.token;
+        testCardToken = body.response.token;
         done();
       });
 
@@ -67,7 +67,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testChargeToken = body.token;
+        testChargeToken = body.response.token;
         done();
       });
     });
@@ -100,7 +100,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        nonCapturedCharge = body.token;
+        nonCapturedCharge = body.response.token;
         done();
       });
     });
@@ -127,7 +127,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testCustomerToken = body.token;
+        testCustomerToken = body.response.token;
         done();
       })
     });
@@ -206,7 +206,7 @@ if(key.length > 0) {
         address_state: 'WA',
         address_country: 'AU'
       }, function (err,res,body) {
-        testCardToken = body.token;
+        testCardToken = body.response.token;
         pin.createCustomer({
           email: 'roland@pinpayments.com',
           card_token: testCardToken
@@ -226,7 +226,7 @@ if(key.length > 0) {
         name  : 'Fat Dinosaur',
         bank_account : {
           "name": "Mr Fat Dinosaur",
-          "bsb": "123456",
+          "bsb": "342088",
           "number": "987654321"
         }
       }
@@ -234,6 +234,33 @@ if(key.length > 0) {
         if(err) {throw err};
         testRecipient = body.response;
         done();
+      });
+    });
+  });
+
+  describe('Create recipient with incorrect BSB', function() {
+    it('should return a validation error', function(done) {
+      recipientWrongBsb = {
+        email : 'dino@thefat.com',
+        name  : 'Fat Dinosaur',
+        bank_account : {
+          "name": "Mr Fat Dinosaur",
+          "bsb": "123456",
+          "number": "987654321"
+        }
+      }
+      pin.createRecipient(recipientWrongBsb, function(err, res, body) {
+        if (err) {
+          expect(res.statusCode).to.equal(422);
+          expect(body.error).to.equal('invalid_resource');
+          expect(body.error_description).to.equal('One or more parameters were missing or invalid');
+          expect(body.messages[0].param).to.equal('bank_account');
+          expect(body.messages[0].code).to.equal('bank_account_invalid');
+          expect(body.messages[0].message).to.equal('Bank account is invalid');
+          done();
+        } else {
+          throw 'Expecting an error';
+        };
       });
     });
   });
@@ -282,7 +309,7 @@ if(key.length > 0) {
       });
     });
     it('should update recipient bank account', function(done){
-      var bankUpdate = {"name": "Mr Roland Robot","bsb": "123456","number": "987654321"};
+      var bankUpdate = {"name": "Mr Roland Robot","bsb": "342088","number": "987654321"};
       pin.updateRecipientData(testRecipient.token,{bank_account: bankUpdate},function(err,res,body){
         if(err) {throw err };
         expect(body.response.bank_account.name).to.equal(bankUpdate.name);
@@ -301,7 +328,7 @@ if(key.length > 0) {
         recipient : testRecipient.token
       },function(err,res,body){
         if(err) {throw err};
-        testTransfer = body;
+        testTransfer = body.response;
         done();
       });
     });
