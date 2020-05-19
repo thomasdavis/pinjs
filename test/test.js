@@ -159,6 +159,29 @@ if(key.length > 0) {
     });
   });
 
+  describe('Add a customer card', function () {
+    it('should return successfully', function (done) {
+      var otherCard = {
+        number: 372000000000000,
+        expiry_month: '11',
+        expiry_year: nextYear,
+        cvc: 1234,
+        name: 'Roland Robot',
+        address_line1: '42 Sevenoaks St',
+        address_city: 'Lathlain',
+        address_postcode: 6454,
+        address_state: 'WA',
+        address_country: 'AU'
+      };
+      pin.createCustomerCard(testCustomerToken, otherCard, function (err,res,body) {
+        if (err) { throw err };
+        expect(res.statusCode).to.equal(201); // Created
+        expect(body.response.customer_token).to.equal(testCustomerToken);
+        done();
+      });
+    });
+  });
+
   describe('Refund a charge', function () {
     it('should return successfully', function (done) {
       pin.refundCharge(testChargeToken, {
