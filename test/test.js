@@ -136,7 +136,24 @@ if(key.length > 0) {
   describe('Retrieve a customer', function () {
     it('should return successfully', function (done) {
       pin.retrieveCustomer(testCustomerToken, function (err,res,body) {
-        if (err) { throw err };
+        if (err) { throw err }
+        done();
+      });
+    });
+  });
+
+  describe('Retrieve customer cards', function () {
+    it('should return successfully', function (done) {
+      pin.retrieveCustomerCards(testCustomerToken, function(err, res, body) {
+        if (err) {
+          console.log(err);
+          throw err
+        }
+        expect(res.statusCode).to.eq(200);
+        expect(res.headers['content-type']).to.equal('application/json; charset=utf-8');
+        expect(body.response[0].token).to.match(/card_(\w+)/);
+        expect(body.response[0].scheme).to.match(/master|visa/);
+        expect(body.response[0].customer_token).to.match(/cus_(\w+)/);
         done();
       });
     });
@@ -298,7 +315,7 @@ if(key.length > 0) {
       pin.updateRecipientData(testRecipient.token,{email : 'test@test.com'},function(err,res,body){
         if(err) {throw err};
         expect(body.response.email).to.equal('test@test.com');
-        done()
+        done();
       });
     });
     it('should update recipient name', function(done){
