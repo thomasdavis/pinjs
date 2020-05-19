@@ -36,7 +36,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testCardToken = body.token;
+        testCardToken = body.response.token;
         done();
       });
 
@@ -67,7 +67,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        testChargeToken = body.token;
+        testChargeToken = body.response.token;
         done();
       });
     });
@@ -100,7 +100,7 @@ if(key.length > 0) {
           console.error(err, res, body);
           throw err
         };
-        nonCapturedCharge = body.token;
+        nonCapturedCharge = body.response.token;
         done();
       });
     });
@@ -136,7 +136,24 @@ if(key.length > 0) {
   describe('Retrieve a customer', function () {
     it('should return successfully', function (done) {
       pin.retrieveCustomer(testCustomerToken, function (err,res,body) {
-        if (err) { throw err };
+        if (err) { throw err }
+        done();
+      });
+    });
+  });
+
+  describe('Retrieve customer cards', function () {
+    it('should return successfully', function (done) {
+      pin.retrieveCustomerCards(testCustomerToken, function(err, res, body) {
+        if (err) {
+          console.log(err);
+          throw err
+        }
+        expect(res.statusCode).to.eq(200);
+        expect(res.headers['content-type']).to.equal('application/json; charset=utf-8');
+        expect(body.response[0].token).to.match(/card_(\w+)/);
+        expect(body.response[0].scheme).to.match(/master|visa/);
+        expect(body.response[0].customer_token).to.match(/cus_(\w+)/);
         done();
       });
     });
@@ -229,7 +246,7 @@ if(key.length > 0) {
         address_state: 'WA',
         address_country: 'AU'
       }, function (err,res,body) {
-        testCardToken = body.token;
+        testCardToken = body.response.token;
         pin.createCustomer({
           email: 'roland@pinpayments.com',
           card_token: testCardToken
@@ -257,6 +274,33 @@ if(key.length > 0) {
         if(err) {throw err};
         testRecipient = body.response;
         done();
+      });
+    });
+  });
+
+  describe('Create recipient with incorrect BSB', function() {
+    it('should return a validation error', function(done) {
+      recipientWrongBsb = {
+        email : 'dino@thefat.com',
+        name  : 'Fat Dinosaur',
+        bank_account : {
+          "name": "Mr Fat Dinosaur",
+          "bsb": "123456",
+          "number": "987654321"
+        }
+      }
+      pin.createRecipient(recipientWrongBsb, function(err, res, body) {
+        if (err) {
+          expect(res.statusCode).to.equal(422);
+          expect(body.error).to.equal('invalid_resource');
+          expect(body.error_description).to.equal('One or more parameters were missing or invalid');
+          expect(body.messages[0].param).to.equal('bank_account');
+          expect(body.messages[0].code).to.equal('bank_account_invalid');
+          expect(body.messages[0].message).to.equal('Bank account is invalid');
+          done();
+        } else {
+          throw 'Expecting an error';
+        };
       });
     });
   });
@@ -294,7 +338,7 @@ if(key.length > 0) {
       pin.updateRecipientData(testRecipient.token,{email : 'test@test.com'},function(err,res,body){
         if(err) {throw err};
         expect(body.response.email).to.equal('test@test.com');
-        done()
+        done();
       });
     });
     it('should update recipient name', function(done){
@@ -324,7 +368,7 @@ if(key.length > 0) {
         recipient : testRecipient.token
       },function(err,res,body){
         if(err) {throw err};
-        testTransfer = body;
+        testTransfer = body.response;
         done();
       });
     });

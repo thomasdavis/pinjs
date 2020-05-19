@@ -2,7 +2,8 @@
 
 [![Build Status](https://secure.travis-ci.org/ApiEngine/pinjs.png?branch=master)](http://travis-ci.org/ApiEngine/pinjs)
 
-Pin.js is an node.js API client for [Pin](https://pinpayments.com/) which is an Australian payment gateway.    The module has wrapped all documented Pin resources.
+Pin.js is an node.js API client for [Pin](https://pinpayments.com/) which is an Australian payment gateway.
+The module has wrapped all documented Pin resources.
 
 Down under we don't have access to some of the cooler payment gateways so we are looking forward to Pin giving us more options than just Paypal.
 
