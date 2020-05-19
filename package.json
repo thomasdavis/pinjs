@@ -9,7 +9,7 @@
     "test": "mocha -R list -t 5000"
   },
   "main": "./lib/pin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {
     "got": "^10.7.0"
   },
